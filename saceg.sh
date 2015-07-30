@@ -50,7 +50,6 @@ openssl req \
     -newkey rsa:4096 \
     -days 365 \
     -nodes \
-    -x509 \
     -subj "/C=${COUNTRY}/ST=${STATE}/L=${LOCALE}/O=${ORG}/CN=${COMMON}/emailAddress=${EMAIL}" \
     -keyout ${COMMON}.key \
     -out ${COMMON}.cert 
@@ -105,33 +104,6 @@ read -d '' CONFIG<<EOF
 HOME			= .
 RANDFILE		= \$ENV::HOME/.rnd
 
-####################################################################
-[ ca ]
-default_ca	= CA_default		# The default ca section
-
-####################################################################
-[ CA_default ]
-
-x509_extensions	= usr_cert		# The extentions to add to the cert
-
-name_opt 	= ca_default		# Subject Name options
-cert_opt 	= ca_default		# Certificate field options
-
-default_days	= 365			# how long to certify for
-default_crl_days= 30			# how long before next CRL
-default_md	= default		# use public key default MD
-preserve	= no			# keep passed DN ordering
-policy		= policy_match
-
-# For the CA policy
-[ policy_match ]
-countryName		= match
-stateOrProvinceName	= match
-organizationName	= match
-organizationalUnitName	= optional
-commonName		= supplied
-emailAddress		= optional
-
 # For the 'anything' policy
 # At this point in time, you must list all acceptable 'object'
 # types.
@@ -177,8 +149,6 @@ commonName_max			= 64
 
 emailAddress			= Email Address
 emailAddress_max		= 64
-
-# SET-ex3			= SET extension number 3
 
 [ req_attributes ]
 challengePassword		= A challenge password
